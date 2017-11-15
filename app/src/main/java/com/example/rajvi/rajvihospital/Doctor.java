@@ -18,6 +18,11 @@ public class Doctor {
 
     }
 
+    //contructor with username and password
+    public Doctor(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
     //5 parameter
     public Doctor( int id, String username, String password, String fname, String lname, String depart, int type ){
         this.id = id;
@@ -29,6 +34,8 @@ public class Doctor {
 
     //4 parameter
     public Doctor( String username, String password, String fname, String lname, String depart, int type ){
+        this.username = username;
+        this.password = password;
         this.fname = fname;
         this.lname = lname;
         this.department = depart;

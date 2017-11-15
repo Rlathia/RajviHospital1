@@ -18,7 +18,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     //all static variables
     //database version
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
 
     //database name
     private static final String DATABASE_NAME = "RajviHospital";
@@ -31,6 +31,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
     //doctor table columns name
     private static final String KEY_D_ID = "doctor_id";
+    private static final String KEY_D_USERNAME = "username";
+    private static final String KEY_D_PASSWORD = "password";
     private static final String KEY_D_FNAME = "firstname";
     private static final String KEY_D_LNAME = "lastname";
     private static final String KEY_D_DEPARTMENT = "department";
@@ -64,6 +66,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String CREATE_DOCTOR_TABLE = "CREATE TABLE " + TABLE_DOCTOR + "("
                 + KEY_D_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + KEY_D_USERNAME + " TEXT,"
+                + KEY_D_PASSWORD + " TEXT,"
                 + KEY_D_FNAME + " TEXT,"
                 + KEY_D_LNAME + " TEXT,"
                 + KEY_D_DEPARTMENT + " TEXT,"
@@ -136,6 +140,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
+        values.put(KEY_D_USERNAME, newDoc.getUsername());
+        values.put(KEY_D_PASSWORD, newDoc.getPassword());
         values.put(KEY_D_FNAME, newDoc.getFname());
         values.put(KEY_D_LNAME, newDoc.getLname());
         values.put(KEY_D_DEPARTMENT, newDoc.getDepartment());
@@ -196,11 +202,12 @@ public class DBHandler extends SQLiteOpenHelper {
 
             } while(cursor.moveToNext());
         }
+        db.close();
         //return patient list
         return patientList;
     }
 
-    // geeting all tests
+    // getting all tests
     public List<Test> getTestList(){
 
         List<Test> testList = new ArrayList<>();
@@ -227,7 +234,36 @@ public class DBHandler extends SQLiteOpenHelper {
 
             } while(cursor.moveToNext());
         }
+        db.close();
         //return test list
         return testList;
     }
+
+    //Checking username and password
+    public boolean validUser(Doctor doc){
+
+        String username = doc.getUsername();
+        String password = doc.getPassword();
+        Cursor cursor = null;
+        SQLiteDatabase db;
+        //select all doctors/nurses
+        String userQuery = "SELECT " + KEY_D_ID + " FROM " + TABLE_DOCTOR + " WHERE " + KEY_D_USERNAME + " = '" + username + "' AND " + KEY_D_PASSWORD + " = '" + password + "';";
+        try{
+            db = this.getWritableDatabase();
+            cursor = db.rawQuery(userQuery, null);
+            db.close();
+        } catch(Exception e){
+            Log.d("Database Exception","rr e: "+ e);
+        }
+
+        if(cursor != null){
+            Log.d("db validUser()","rr cursor: " + cursor);
+            return true;
+        }
+        else {
+            Log.d("db validUser()", "rr no such user found: " + username + password);
+            return false;
+        }
+    }
+
 }

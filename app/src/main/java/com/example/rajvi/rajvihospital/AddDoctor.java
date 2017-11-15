@@ -25,6 +25,7 @@ public class AddDoctor extends AppCompatActivity {
     String user_type;
 
     DBHandler db;
+    Validation vd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class AddDoctor extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 int selectedId = enttype.getCheckedRadioButtonId();
-                Log.d("rr seelcted id: ","selectedId");
+                Log.d("selected id: ","rr selectedId");
                 rbtn = (RadioButton) findViewById(selectedId);
                 user_type = rbtn.getText().toString();
             }
@@ -77,46 +78,46 @@ public class AddDoctor extends AppCompatActivity {
                 Boolean validFname = true;
                 Boolean validLname = true;
                 Boolean validDepart = true;
-                Boolean isValidUsername = checkUsername(username);
-                Boolean isValidPassword = checkPassword(password);
-                Boolean isValidFName = checkLetters(fname);
-                Boolean isValidLName = checkLetters(lname);
-                Boolean isValidDepart = checkLetters(department);
+                Boolean isValidUsername = vd.checkUsername(username);
+                Boolean isValidPassword = vd.checkPassword(password);
+                Boolean isValidFName = vd.checkLetters(fname);
+                Boolean isValidLName = vd.checkLetters(lname);
+                Boolean isValidDepart = vd.checkLetters(department);
                 //View object for focus
                 View focusView = null;
 
                 if(isValidUsername == false){
                     entusername.setError("Invalid. Must start with a letter & length > 3");
                     Toast.makeText(getApplicationContext(), "Example: 'Rajvi12'", Toast.LENGTH_LONG).show();
-                    Log.d("entered username ","= "+ username);
+                    Log.d("invalid username "," rr = "+ username);
                     focusView = entusername;
                     validUsername = false;
                 }
                 if(isValidPassword == false){
-                    entpassword.setError("Required");
+                    entpassword.setError("Invalid. Length must be > 3");
                     //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
-                    Log.d("entered password ","= "+ password);
+                    Log.d("invalid password "," rr = "+ password);
                     focusView = entpassword;
                     validPassword = false;
                 }
                 if(isValidFName == false){
-                    entfname.setError("Invalid. Only letters");
+                    entfname.setError("Invalid. Must contain Only letters");
                     //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
-                    Log.d("entered first name ","= "+ fname);
+                    Log.d("invalid first name "," rr = "+ fname);
                     focusView = entfname;
                     validFname = false;
                 }
                 if(isValidLName == false){
-                    entlname.setError("Invalid. Only letters");
+                    entlname.setError("Invalid. Must contain Only letters");
                     //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
-                    Log.d("entered last name ","= "+ lname);
+                    Log.d("invalid last name ","rr = "+ lname);
                     focusView = entlname;
                     validLname = false;
                 }
                 if(isValidDepart == false){
-                    entdepartment.setError("Invalid. Only letters");
+                    entdepartment.setError("Invalid. Must contain Only letters");
                     //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
-                    Log.d("entered department ","= "+ department);
+                    Log.d("invalid department ","rr = "+ department);
                     focusView = entdepartment;
                     validDepart = false;
                 }
@@ -128,12 +129,12 @@ public class AddDoctor extends AppCompatActivity {
                     Log.d("values entered", "rr \n username: " + username + " " + password + "\nname: " + fname + lname + "\ndprtmt:  " + department + "type :" + user_type);
 
                     try {
-                        Log.d("database", "db : " + db);
+                        Log.d("database", "rr db : " + db);
                         //calling addNewDoctor method from the DBHandler class
                         db.addNewDoctor(new Doctor(username, password, fname, lname, department, user_type == "Doctor" ? 1 : 0));// if 'add doctor' btn clicked, type = 1
                         Toast.makeText(getApplicationContext(), "Doctor added...", Toast.LENGTH_LONG).show();
                         Log.d("added successfully", "rr \n username: " + username + " " + password + "\nname: " + fname + lname + "\ndprtmt:  " + department + "type :" + user_type);
-                        finish();//go back to previous activi"ty. Here, goes to Home Activity
+                        finish();//go back to previous activity. Here, goes to Home Activity
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(), "Database error \n Couldn't add new Doctor", Toast.LENGTH_LONG).show();
                         Log.d("error", "rr method addNewDoctor()");
@@ -143,29 +144,4 @@ public class AddDoctor extends AppCompatActivity {
         });
     }
 
-    /* USERNAME should contain letters and numbers both
-       USERNAME must be greater than 3 characters long*/
-    public boolean checkUsername(String username) {
-        if ( username == "" || !(username.matches("[a-zA-Z][a-zA-Z0-9]{3,}")) )
-            return false;
-        else
-            return true;
-    }
-    //PASSWORD cannot be null
-    public boolean checkPassword(String password) {
-        if ( password != "" && password.length() != 0 )
-            return true;
-        else
-            return false;
-    }
-    // STRING must contain letters only and cannot be null
-    public boolean checkLetters(String str){
-        Log.d("in checkLetters()", "just entered");
-        if (str.matches("[a-zA-Z]*") && str.length() != 0 && str != "") {
-            Log.d("in checkLetters()", "correct : " + str);
-            return true;
-        }
-        else
-            return false;
-    }
 }
