@@ -245,23 +245,33 @@ public class DBHandler extends SQLiteOpenHelper {
         String username = doc.getUsername();
         String password = doc.getPassword();
         Cursor cursor = null;
-        SQLiteDatabase db;
-        //select all doctors/nurses
+        SQLiteDatabase db = null;
+        String str = null;
+        //select the doctors/nurses having the same username and password as entered by the user in login form
         String userQuery = "SELECT " + KEY_D_ID + " FROM " + TABLE_DOCTOR + " WHERE " + KEY_D_USERNAME + " = '" + username + "' AND " + KEY_D_PASSWORD + " = '" + password + "';";
+        Log.d("validUser() Query ","rr \"SELECT " + KEY_D_ID + " FROM " + TABLE_DOCTOR + " WHERE " + KEY_D_USERNAME + " = " + username + " AND " + KEY_D_PASSWORD + " = " + password + ";");
         try{
             db = this.getWritableDatabase();
             cursor = db.rawQuery(userQuery, null);
+            //looping through all rows and adding to the string
+            if(cursor.moveToFirst()){
+                do{
+                    str += cursor.getString(0) + "\n";
+                } while(cursor.moveToNext());
+            }
             db.close();
+            //print the string
+            Log.d("db validUser()","rr cursor: " + cursor + "\n " + str);
         } catch(Exception e){
-            Log.d("Database Exception","rr e: "+ e);
+            Log.d("db validUser()","rr e: "+ e);
         }
-
-        if(cursor != null){
-            Log.d("db validUser()","rr cursor: " + cursor);
+        // cannot check if cursor is not null because even if there is no result of the query, cursor will never be null
+        // so using cursor, we are getting the values inside the cursor into a string and checking if that string is not null.
+        if(str != null){
             return true;
         }
         else {
-            Log.d("db validUser()", "rr no such user found: " + username + password);
+            Log.d("db validUser()", "rr no such user found: " + username + ", " + password);
             return false;
         }
     }

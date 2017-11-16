@@ -98,19 +98,20 @@ public class AddPatient extends AppCompatActivity {
                 if(!validDocID || !validRoom || !validFname || !validLname || !validDepart) {
                     focusView.requestFocus();
                 }else{
+                    //converting string 'doctorId' into number 'num' before adding into database
                     int num = Integer.parseInt(doctorId);
-                    Log.d("values entered", "\nname: " + fname + lname + "\ndprtmt:  " + department + "\ndoc ID: " + num + "\nroom: " + room);
+                    Log.d("values entered", "rr \nname: " + fname + lname + "\ndprtmt:  " + department + "\ndoc ID: " + num + "\nroom: " + room);
 
                     try {
-                        Log.d("database" , "db : " + db);
+                        Log.d("database" , "rr db : " + db);
                         //calling addNewPatient method from the DBHandler class
                         db.addNewPatient(new Patient(fname, lname, department, num, room));
                         Toast.makeText(getApplicationContext(), "Patient added...", Toast.LENGTH_LONG).show();
-                        Log.d("added successfully", "\nname: " + fname + lname + "\ndprtmt:  " + department + "\ndoc ID: " + num + "\nroom: " + room);
+                        Log.d("added successfully", "rr \nname: " + fname + lname + "\ndprtmt:  " + department + "\ndoc ID: " + num + "\nroom: " + room);
                         finish();//go back to previous activity. Here, goes to Home Activity
                     }catch(Exception e){
                         Toast.makeText(getApplicationContext(), "Database error \n Couldn't add new Patient", Toast.LENGTH_LONG).show();
-                        Log.d("error", "method addNewPatient()");
+                        Log.d("error", "rr method addNewPatient()");
                     }
                 }
             }

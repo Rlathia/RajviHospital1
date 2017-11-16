@@ -183,7 +183,11 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        } else if(!isPasswordValid(password)){
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -349,9 +353,9 @@ public class LoginActivity extends AppCompatActivity {
             try{
                 isUserValid = db.validUser(new Doctor(mEmail, mPassword));
             } catch(Exception e){
-                Log.d("in UserLoginTask()", "Exception " + e);
+                Log.d("in UserLoginTask()", "rr Exception " + e);
             }
-            Log.d("in UserLoginTask()","user found? "+ isUserValid);
+            Log.d("in UserLoginTask()","rr user found? "+ isUserValid);
 
             return isUserValid;
 

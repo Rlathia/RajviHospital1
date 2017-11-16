@@ -72,14 +72,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ADD DOCTOR" />
+                    android:text="ADD DOCTOR / NURSE" />
 
-                <Button
-                    android:id="@+id/btn_add_nurse"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="ADD NURSE" />
             </LinearLayout>
 
             <LinearLayout
@@ -90,15 +84,13 @@
                         android:id="@+id/textView_patient_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        />
+                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/textView_test_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                         />
+                        android:layout_weight="1" />
             </LinearLayout>
 
         </LinearLayout>

@@ -111,7 +111,7 @@ public class MainActivity extends Activity {
                 List<Test> testList = db.getTestList(); //fetch list of tests
                 Log.d("List fetched", "rr database test list fetched");
                 for(Test tst : testList){
-                    String testDetail = "\nTest ID: " + tst.getTestID() + "\n\tPatient ID: " + tst.getPatientID() + "\n\tbph & bph: " + tst.getBph() + " " + tst.getBpl() + "\n\tTemperature:  " + tst.getTemp() + "\n\tBlood sugar level: " + tst.getBsl() + "\n\tHeart rate: " + tst.getHrt() + "";
+                    String testDetail = "\nTest ID: " + tst.getTestID() + "\n\tPatient ID: " + tst.getPatientID() + "\n\tbph / bpl: " + tst.getBph() + " / " + tst.getBpl() + "\n\tTemperature:  " + tst.getTemp() + "\n\tBlood Sugar Level: " + tst.getBsl() + "\n\tHeart Rate: " + tst.getHrt() + "";
                     tvTestList.append("\n" + testDetail);
                 }
             }

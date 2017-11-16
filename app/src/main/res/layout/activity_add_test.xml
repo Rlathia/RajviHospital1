@@ -59,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="BPL"
+                    android:hint="BPL (mmHg)"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="BPH"
+                    android:hint="BPH (mmHg)"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="Temperature"
+                    android:hint="Temperature (Fahrenheit)"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="Blood Sugar Level"
+                    android:hint="Blood Sugar Level (mg/dL)"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -123,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="Heart Rate"
+                    android:hint="Heart Rate (bpm)"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
