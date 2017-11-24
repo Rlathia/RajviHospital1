@@ -13,14 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class MainActivity extends Activity {
 
-    Button btnAddPatient, btnAddTest, btnShowPatient, btnShowTest, btnAddDoctor;
-    TextView tvPatientList;
-    TextView tvTestList;
-    private String TAG = "patientInfo";
+    Button btnAddPatient, btnAddTest, btnShowPatient, btnShowTest, btnAddDoctor, btnSignOut;
+    TextView tvPatientList, tvTestList, tvTitle;
     DBHandler db;
 
     @Override
@@ -30,12 +30,28 @@ public class MainActivity extends Activity {
 
         db = new DBHandler(this);
 
+        tvTitle = (TextView) findViewById(R.id.textView_home_page);
         btnAddPatient = (Button) findViewById(R.id.btn_add_patient);
         btnAddTest = (Button) findViewById(R.id.btn_add_test);
         btnShowPatient = (Button) findViewById(R.id.btn_show_patient);
         btnShowTest = (Button) findViewById(R.id.btn_show_test);
         btnAddDoctor = (Button) findViewById(R.id.btn_add_doctor);
+        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
 
+        final Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        tvTitle.setText("Welcome " + bundle.getString("userLoggedIn"));
+
+        //Sign Out button click Listener
+        btnSignOut.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Sign Out button" , "rr clicked");
+                finish();
+
+            }
+        });
+        // Add Patient button click listener
         btnAddPatient.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -46,6 +62,8 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        // Add Test button click listener
         btnAddTest.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -55,6 +73,8 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        // Add Doctor button click listener
         btnAddDoctor.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -65,28 +85,22 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-//        btnShowPatient.setOnClickListener(new OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, AddPatient.class);
-//                startActivity(intent);
-//            }
-//        });
+
+        //Show Patient button click listener
         btnShowPatient.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Log.d("show patient button ", "rr clicked");
-                //VIEW BLOCK NUMBER LIST IN THE TextView Widget
+                // VIEW BLOCK NUMBER LIST IN THE TextView Widget
                 tvPatientList = (TextView)findViewById(R.id.textView_patient_list);
                 tvPatientList.setMovementMethod(ArrowKeyMovementMethod.getInstance());
 
-                tvPatientList.setText("");//clear text area at each button press
+                tvPatientList.setText(""); // clear text area at each button press
 
                 tvPatientList.setPadding(5,2,5,2);
 
-                List<Patient> patientList = db.getPatientList(); //fetch list of patients
+                List<Patient> patientList = db.getPatientList(); // fetch list of patients
                 Log.d("List fetched", "rr database patient list fetched");
                 for(Patient pat : patientList){
                     String patDetail = "\nPatient ID: " + pat.getId() + "\n\tName: " + pat.getFname() + " " + pat.getLname() + "\n\tDepartment:  " + pat.getDepartment() + "\n\tDoctor ID: " + pat.getDoctorID() + "\n\tRoom No: " + pat.getRoom() + "";
@@ -95,16 +109,17 @@ public class MainActivity extends Activity {
             }
         });
 
+        // Show Test button click listener
         btnShowTest.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Log.d("show test button ", "rr clicked");
-                //VIEW BLOCK NUMBER LIST IN THE TextView Widget
+                // VIEW BLOCK NUMBER LIST in the TextView Widget
                 tvTestList = (TextView)findViewById(R.id.textView_test_list);
                 tvTestList.setMovementMethod(ArrowKeyMovementMethod.getInstance());
 
-                tvTestList.setText("");//clear text area at each button press
+                tvTestList.setText(""); //clear text area at each button press
 
                 tvTestList.setPadding(5,2,5,2);
 

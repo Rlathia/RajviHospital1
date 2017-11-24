@@ -47,14 +47,10 @@ public class AddPatient extends AppCompatActivity {
                 String lname = entlname.getText().toString();
                 String department = entdepartment.getText().toString();
                 String room = entroom.getText().toString();
-                //View object for focus
+                //View object for focus, used for validation errors
                 View focusView = null;
                 //Boolean variables for validation
-                Boolean validFname = true;
-                Boolean validLname = true;
-                Boolean validDepart = true;
-                Boolean validRoom = true;
-                Boolean  validDocID = true;
+                Boolean validFname = true, validLname = true, validDepart = true, validRoom = true, validDocID = true;
                 Boolean isValidRoom = vd.checkUsername(room);
                 Boolean isValidFName = vd.checkLetters(fname);
                 Boolean isValidLName = vd.checkLetters(lname);
@@ -62,34 +58,29 @@ public class AddPatient extends AppCompatActivity {
                 Boolean isValidDocID = vd.checkNumber(doctorId);
 
                 if(isValidFName == false){
-                    entfname.setError("Invalid. Must contain Only letters");
-                    //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
+                    entfname.setError(getString(R.string.error_only_letters));
                     Log.d("invalid first name "," rr = "+ fname);
                     focusView = entfname;
                     validFname = false;
                 }
                 if(isValidLName == false){
-                    entlname.setError("Invalid. Must contain Only letters");
-                    //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
+                    entlname.setError(getString(R.string.error_only_letters));
                     Log.d("invalid last name ","rr = "+ lname);
                     focusView = entlname;
                     validLname = false;
                 }
                 if(isValidDepart == false){
-                    entdepartment.setError("Invalid. Must contain Only letters");
-                    //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
+                    entdepartment.setError(getString(R.string.error_only_letters));
                     Log.d("invalid department ","rr = "+ department);
                     focusView = entdepartment;
                     validDepart = false;
                 }if(isValidRoom == false){
-                    entroom.setError("Invalid. Must start with letters and followed by Numbers");
-                    //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
+                    entroom.setError(getString(R.string.error_letters_numbers));
                     Log.d("invalid room ","rr = "+ room);
                     focusView = entroom;
                     validRoom = false;
                 }if(isValidDocID == false){
-                    entdoctorID.setError("Invalid. Must contain Only numbers");
-                    //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
+                    entdoctorID.setError(getString(R.string.error_only_numbers));
                     Log.d("invalid doctor ID ","rr = "+ doctorId);
                     focusView = entdoctorID;
                     validDocID = false;

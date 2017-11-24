@@ -23,16 +23,18 @@ public class Doctor {
         this.username = username;
         this.password = password;
     }
-    //5 parameter
+    //7 parameter
     public Doctor( int id, String username, String password, String fname, String lname, String depart, int type ){
         this.id = id;
+        this.username = username;
+        this.password = password;
         this.fname = fname;
         this.lname = lname;
         this.department = depart;
         this.type = type;
     }
 
-    //4 parameter
+    //6 parameters
     public Doctor( String username, String password, String fname, String lname, String depart, int type ){
         this.username = username;
         this.password = password;

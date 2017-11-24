@@ -53,12 +53,7 @@ public class AddTest extends Activity {
                 //View object for focus
                 View focusView = null;
                 //Boolean variables for validation
-                Boolean validPatID = true;
-                Boolean validBPL = true;
-                Boolean validBPH = true;
-                Boolean validTemp = true;
-                Boolean validBSL = true;
-                Boolean validHRT = true;
+                Boolean validPatID = true, validBPL = true, validBPH = true, validTemp = true, validBSL = true, validHRT = true;
                 Boolean isValidPatID = vd.checkNumber(patId);
                 Boolean isValidHRT = vd.checkNumber(hrt);
                 Boolean isValidBSL = vd.checkBSL(bsl);
@@ -67,7 +62,7 @@ public class AddTest extends Activity {
                 Boolean isValidTemp = vd.checkTemp(temp);
 
                 if(isValidPatID == false){
-                    entpatID.setError("Invalid. Must contain Only numbers");
+                    entpatID.setError(getString(R.string.error_only_numbers));
                     Log.d("invalid Patient ID","rr = "+ patId);
                     focusView = entpatID;
                     validPatID = false;
@@ -96,7 +91,7 @@ public class AddTest extends Activity {
                     focusView = entbsl;
                     validBSL = false;
                 }if(isValidHRT == false){
-                    enthrt.setError("Invalid. Must contain Only numbers");
+                    enthrt.setError(getString(R.string.error_only_numbers));
                     Log.d("invalid Heart Rate","rr = "+ hrt);
                     focusView = enthrt;
                     validHRT = false;

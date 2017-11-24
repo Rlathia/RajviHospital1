@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     //private static final int REQUEST_READ_CONTACTS = 0;
 
     DBHandler db = new DBHandler(this);
+    Validation vd = new Validation();
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -74,9 +75,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set up the login form.
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
-       // populateAutoComplete();
-
         mPasswordView = (EditText) findViewById(R.id.password);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -109,6 +109,13 @@ public class LoginActivity extends AppCompatActivity {
         mProgressView = findViewById(R.id.login_progress);
     }
 
+    protected void onResume() {
+        super.onResume();
+        Log.d("in onResume()", "rr");
+        mPasswordView.setText("");
+        mUsernameView.setText("");
+
+    }
 //    private void populateAutoComplete() {
 //        if (!mayRequestContacts()) {
 //            return;
@@ -154,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //register new account
     private void attemptRegister(){
-        Log.d("register button ", "rr clicked");
+        Log.d("'Register' button ", "rr clicked");
         Intent intent = new Intent(LoginActivity.this, AddDoctor.class);
         Log.d("'Add Doctor' intent ", "rr created");
         startActivity(intent);
@@ -187,7 +194,7 @@ public class LoginActivity extends AppCompatActivity {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
-        } else if(!isPasswordValid(password)){
+        } else if(!vd.checkPassword(password)){
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -198,7 +205,7 @@ public class LoginActivity extends AppCompatActivity {
             mUsernameView.setError(getString(R.string.error_field_required));
             focusView = mUsernameView;
             cancel = true;
-        } else if (!isUsernameValid(username)) {
+        } else if (!vd.checkUsername(username)) {
             mUsernameView.setError(getString(R.string.error_invalid_username));
             focusView = mUsernameView;
             cancel = true;
@@ -218,19 +225,19 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isUsernameValid(String username) {
-        if ( username == "" || !(username.matches("[a-zA-Z][a-zA-Z0-9]{3,}")) )
-            return false;
-        else
-            return true;
-    }
+//    private boolean isUsernameValid(String username) {
+//        if ( username == "" || !(username.matches("[a-zA-Z][a-zA-Z0-9]{3,}")) )
+//            return false;
+//        else
+//            return true;
+//    }
 
-    private boolean isPasswordValid(String password) {
-        if ( password != "" && password.length() > 3 )
-            return true;
-        else
-            return false;
-    }
+//    private boolean isPasswordValid(String password) {
+//        if ( password != "" && password.length() > 3 )
+//            return true;
+//        else
+//            return false;
+//    }
 
     /**
      * Shows the progress UI and hides the login form.
@@ -267,74 +274,17 @@ public class LoginActivity extends AppCompatActivity {
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-
-//EMAIL AUTO COMPLETE CODE FROM THE USER'S DEVICE
-
-//    @Override
-//    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-//        return new CursorLoader(this,
-//                // Retrieve data rows for the device user's 'profile' contact.
-//                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-//                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-//
-//                // Select only email addresses.
-//                ContactsContract.Contacts.Data.MIMETYPE +
-//                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-//                .CONTENT_ITEM_TYPE},
-//
-//                // Show primary email addresses first. Note that there won't be
-//                // a primary email address if the user hasn't specified one.
-//                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-//    }
-//
-//    @Override
-//    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-//        List<String> username = new ArrayList<>();
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()) {
-//            username.add(cursor.getString(ProfileQuery.NAME));
-//            cursor.moveToNext();
-//        }
-//
-//        addUsernamesToAutoComplete(username);
-//    }
-//
-//    @Override
-//    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-//
-//    }
-//
-//    private void addUsernamesToAutoComplete(List<String> usernameCollection) {
-//        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-//        ArrayAdapter<String> adapter =
-//                new ArrayAdapter<>(LoginActivity.this,
-//                        android.R.layout.simple_dropdown_item_1line, usernameCollection);
-//
-//        mUsernameView.setAdapter(adapter);
-//    }
-//
-//
-//    private interface ProfileQuery {
-//        String[] PROJECTION = {
-//                ContactsContract.CommonDataKinds.Nickname.NAME,
-//                ContactsContract.CommonDataKinds.Nickname.CONTACT_STATUS,
-//        };
-//
-//        int NAME = 0;
-//        int CONTACT_STATUS = 1;
-//    }
-
     /**
-     * Represents an asynchronous login/registration task used to authenticate
+     * Represents an asynchronous login task used to authenticate
      * the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mUsername;
         private final String mPassword;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        UserLoginTask(String username, String password) {
+            mUsername = username;
             mPassword = password;
         }
 
@@ -351,28 +301,13 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
             try{
-                isUserValid = db.validUser(new Doctor(mEmail, mPassword));
+                isUserValid = db.validUser(new Doctor(mUsername, mPassword));
             } catch(Exception e){
                 Log.d("in UserLoginTask()", "rr Exception " + e);
             }
-            Log.d("in UserLoginTask()","rr user found? "+ isUserValid);
+            Log.d("in UserLoginTask()","rr m user found? "+ isUserValid);
 
             return isUserValid;
-
-//                for (String credential : DUMMY_CREDENTIALS) {
-//                    String[] pieces = credential.split(":");
-//                    if (pieces[0].equals(mEmail)) {
-//                        // Account exists, return true if the password matches.
-//                        if (pieces[1].equals(mPassword)) {
-//                            Log.d("inside", "rajvirr");
-//                            //Toast.makeText(getApplicationContext(), mPassword + " password matches", Toast.LENGTH_LONG).show();
-//                        }
-//                        Log.d("outside", "rajvirr");
-//                        return pieces[1].equals(mPassword);
-//                    }
-//                }
-//                return true;
-
         }
 
         @Override
@@ -382,9 +317,10 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("userLoggedIn", mUsername);
                 startActivity(intent);
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.setError(getString(R.string.error_incorrect));
                 mPasswordView.requestFocus();
             }
         }

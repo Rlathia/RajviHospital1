@@ -33,6 +33,7 @@ public class AddDoctor extends AppCompatActivity {
         setContentView(R.layout.activity_add_doctor);
 
         db = new DBHandler(this);
+        vd = new Validation();
 
         entusername = (EditText) findViewById(R.id.et_doc_username);
         entpassword = (EditText) findViewById(R.id.et_doc_password);
@@ -41,7 +42,7 @@ public class AddDoctor extends AppCompatActivity {
         entdepartment = (EditText) findViewById(R.id.et_department);
         enttype = (RadioGroup) findViewById(R.id.radio_type);
         btnAddDoctor = (Button) findViewById(R.id.btn_doctor);
-        //to store default selection
+        // Stores default selection
         int selectedId = enttype.getCheckedRadioButtonId();
         rbtn = (RadioButton) findViewById(selectedId);
         user_type = rbtn.getText().toString();
@@ -73,11 +74,7 @@ public class AddDoctor extends AppCompatActivity {
                 String username = entusername.getText().toString();
                 String password = entpassword.getText().toString();
                 //Boolean variables for validation
-                Boolean validUsername = true;
-                Boolean validPassword = true;
-                Boolean validFname = true;
-                Boolean validLname = true;
-                Boolean validDepart = true;
+                Boolean validUsername = true, validPassword = true, validFname = true, validLname = true, validDepart = true;
                 Boolean isValidUsername = vd.checkUsername(username);
                 Boolean isValidPassword = vd.checkPassword(password);
                 Boolean isValidFName = vd.checkLetters(fname);
@@ -95,28 +92,24 @@ public class AddDoctor extends AppCompatActivity {
                 }
                 if(isValidPassword == false){
                     entpassword.setError("Invalid. Length must be > 3");
-                    //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
                     Log.d("invalid password "," rr = "+ password);
                     focusView = entpassword;
                     validPassword = false;
                 }
                 if(isValidFName == false){
                     entfname.setError("Invalid. Must contain Only letters");
-                    //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
                     Log.d("invalid first name "," rr = "+ fname);
                     focusView = entfname;
                     validFname = false;
                 }
                 if(isValidLName == false){
                     entlname.setError("Invalid. Must contain Only letters");
-                    //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
                     Log.d("invalid last name ","rr = "+ lname);
                     focusView = entlname;
                     validLname = false;
                 }
                 if(isValidDepart == false){
                     entdepartment.setError("Invalid. Must contain Only letters");
-                    //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
                     Log.d("invalid department ","rr = "+ department);
                     focusView = entdepartment;
                     validDepart = false;
@@ -131,7 +124,7 @@ public class AddDoctor extends AppCompatActivity {
                     try {
                         Log.d("database", "rr db : " + db);
                         //calling addNewDoctor method from the DBHandler class
-                        db.addNewDoctor(new Doctor(username, password, fname, lname, department, user_type == "Doctor" ? 1 : 0));// if 'add doctor' btn clicked, type = 1
+                        db.addNewDoctor(new Doctor(username, password, fname, lname, department, user_type == "Doctor" ? 1 : 0));// if 'doctor' radio button is clicked, type = 1 else type = 0
                         Toast.makeText(getApplicationContext(), "Doctor added...", Toast.LENGTH_LONG).show();
                         Log.d("added successfully", "rr \n username: " + username + " " + password + "\nname: " + fname + lname + "\ndprtmt:  " + department + "type :" + user_type);
                         finish();//go back to previous activity. Here, goes to Home Activity

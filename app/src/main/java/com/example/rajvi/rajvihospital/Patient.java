@@ -7,12 +7,8 @@ package com.example.rajvi.rajvihospital;
 public class Patient {
 
     //private variables
-    int id;
-    String fname;
-    String lname;
-    String department;
-    int doctorID;
-    String room;
+    int id, doctorID;
+    String fname, lname, department, room;
 
     //empty constructor
     public Patient(){
@@ -82,7 +78,5 @@ public class Patient {
         return room;
     }
 
-    public void setRoom(String room) {
-        this.room = room;
-    }
+    public void setRoom(String room) { this.room = room; }
 }

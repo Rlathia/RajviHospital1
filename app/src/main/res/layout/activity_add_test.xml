@@ -43,7 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="Patient ID"
+                    android:hint="@string/prompt_patient_id"
                     android:inputType="textPersonName"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -59,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="BPL (mmHg)"
+                    android:hint="@string/prompt_bpl"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="BPH (mmHg)"
+                    android:hint="@string/prompt_bph"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="Temperature (Fahrenheit)"
+                    android:hint="@string/prompt_temp"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="Blood Sugar Level (mg/dL)"
+                    android:hint="@string/prompt_bsl"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -123,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="Heart Rate (bpm)"
+                    android:hint="@string/prompt_hrt"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_marginTop="16dp"
-                android:text="ADD TEST"
+                android:text="@string/action_add_test"
                 android:textStyle="bold" />
 
         </LinearLayout>

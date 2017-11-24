@@ -6,20 +6,13 @@ package com.example.rajvi.rajvihospital;
 
 public class Test {
     //private variables
-    int testID;
-    int patientID;
-    double bpl;
-    double bph;
-    double temp;
-    double blood_sugar_level;
-    int heart_rate;
+    int testID, patientID, heart_rate;
+    double bpl, bph, temp, blood_sugar_level;
 
     //empty constructor
-    public Test(){
+    public Test(){}
 
-    }
-
-    //5 parameter
+    //5 parameters
     public Test(int patientid, double bpl, double bph, double temp, double bsl, int hrt){
         this.patientID = patientid;
         this.bpl = bpl;
@@ -29,15 +22,18 @@ public class Test {
         this.heart_rate = hrt;
     }
 
-    //6 parameter
+    //6 parameters
     public Test(int testid, int patientid, double bpl, double bph, double temp, double bsl, int hrt){
         this.testID = testid;
         this.patientID = patientid;
         this.bpl = bpl;
         this.bph = bph;
         this.temp = temp;
+        this.blood_sugar_level = bsl;
+        this.heart_rate = hrt;
     }
 
+    // Getters and Setters
     public int getTestID() {
         return testID;
     }

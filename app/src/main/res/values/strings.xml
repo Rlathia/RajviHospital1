@@ -11,11 +11,35 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_username">This username is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_incorrect">Username - Password combination is invalid</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+
+    <!--Strings related to Main Activity Home page -->
+    <string name="action_sign_out">Sign Out</string>
+    <string name="action_add_patient">ADD PATIENT</string>
+    <string name="action_add_test">ADD TEST</string>
+    <string name="action_add_doctor">ADD DOCTOR / NURSE</string>
+    <string name="action_show_patient">SHOW PATIENTS</string>
+    <string name="action_show_test">SHOW TEST</string>
     <string name="title_activity_home">HomeActivity</string>
+
+    <!--Strings related to the add patient, add doctor and add test form-->
+    <string name="prompt_first_name">First Name</string>
+    <string name="prompt_last_name">Last Name</string>
+    <string name="prompt_department">Department</string>
+    <string name="prompt_doctor_id">Doctor ID</string>
+    <string name="prompt_patient_id">Patient ID</string>
+    <string name="prompt_room">Room Number</string>
+    <string name="prompt_bpl">BPL (mmHg)</string>
+    <string name="prompt_bph">BPH (mmHg)</string>
+    <string name="prompt_bsl">Blood Sugar Level (mg/dL)</string>
+    <string name="prompt_hrt">Heart Rate (bpm)</string>
+    <string name="prompt_temp">Temperature (Fahrenheit)</string>
     <string name="title_activity_add_test">AddTest</string>
+
+    <!--Validation error messages for 'Add _' form-->
+    <string name="error_only_letters">Invalid. Must contain only letters</string>
+    <string name="error_only_numbers">Invalid. Must contain only numbers</string>
+    <string name="error_letters_numbers">Invalid. Must start with letters followed by numbers"</string>
 </resources>

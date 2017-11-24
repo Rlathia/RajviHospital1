@@ -95,7 +95,6 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_DOCTOR_TABLE);
         db.execSQL(CREATE_PATIENT_TABLE);
         db.execSQL(CREATE_TEST_TABLE);
-
         Log.d("in onCreate()" , "rr tables created");
     }
 
@@ -116,7 +115,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Log.d("in db.addNewPatient()", "rr just entered");
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
         values.put(KEY_P_FNAME, newPat.getFname());
@@ -137,7 +135,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Log.d("in db.addNewDoctor()", "rr just entered");
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
         values.put(KEY_D_USERNAME, newDoc.getUsername());
@@ -159,7 +156,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Log.d("in db.addNewTest()", "rr just entered");
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
         values.put(KEY_T_PID, newTest.getPatientID());
