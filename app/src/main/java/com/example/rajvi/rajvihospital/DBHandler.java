@@ -179,7 +179,7 @@ public class DBHandler extends SQLiteOpenHelper {
         //Select all query
         String selectQuery = "SELECT * FROM " + TABLE_PATIENT;
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         //looping through all rows and adding to list
@@ -210,7 +210,7 @@ public class DBHandler extends SQLiteOpenHelper {
         //Select all query
         String selectQuery = "SELECT * FROM " + TABLE_TEST;
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         //looping through all rows and adding to list
@@ -235,20 +235,67 @@ public class DBHandler extends SQLiteOpenHelper {
         return testList;
     }
 
+    //List of Doctor's id, firstname and lastname
+    public List<String> getDoctorNameList(){
+
+        List<String> doctorList = new ArrayList<>();
+        //Select first name and last name query
+        String selectQuery = "SELECT " + KEY_D_ID + ", " + KEY_D_FNAME + ", " + KEY_D_LNAME + " FROM " + TABLE_DOCTOR + " WHERE " + KEY_D_TYPE + " = 0";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        //looping through all rows and adding to list
+        if(cursor.moveToFirst()){
+            do{
+                String doctor = "  " + cursor.getString(0) + ": " + cursor.getString(1) + " " + cursor.getString(2);
+                Log.d("DoctorList: ",doctor);
+                //adding (all Doctor's first and last name) string :doctor  to the list
+                doctorList.add(doctor);
+
+            } while(cursor.moveToNext());
+        }
+        db.close();
+        //return test list
+        return doctorList;
+    }
+
+    //Checking for username already exists
+    public boolean isUniqueUsername(String username){
+
+        //select the doctors/nurses having the same username and password as entered by the user in login form
+        String userExistsQuery = "SELECT COUNT(*) FROM " + TABLE_DOCTOR + " WHERE " + KEY_D_USERNAME + " = '" + username + "';";
+        Log.d("validUser() Query ","rr \"SELECT COUNT(*) FROM " + TABLE_DOCTOR + " WHERE " + KEY_D_USERNAME + " = " + username + ";");
+        try{
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(userExistsQuery, null);
+
+            //looping through all rows and adding to the string
+            if(cursor.getCount() > 0){
+                Log.d("Username ","count > 0");
+                return false;
+            }
+            db.close();
+        } catch(Exception e){
+            Log.d("db isUniqueUsername()","rr e: "+ e);
+            return false;
+        }
+        return true;
+    }
+
     //Checking username and password
     public boolean validUser(Doctor doc){
 
         String username = doc.getUsername();
         String password = doc.getPassword();
-        Cursor cursor = null;
-        SQLiteDatabase db = null;
         String str = null;
         //select the doctors/nurses having the same username and password as entered by the user in login form
         String userQuery = "SELECT " + KEY_D_ID + " FROM " + TABLE_DOCTOR + " WHERE " + KEY_D_USERNAME + " = '" + username + "' AND " + KEY_D_PASSWORD + " = '" + password + "';";
         Log.d("validUser() Query ","rr \"SELECT " + KEY_D_ID + " FROM " + TABLE_DOCTOR + " WHERE " + KEY_D_USERNAME + " = " + username + " AND " + KEY_D_PASSWORD + " = " + password + ";");
         try{
-            db = this.getWritableDatabase();
-            cursor = db.rawQuery(userQuery, null);
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(userQuery, null);
+
             //looping through all rows and adding to the string
             if(cursor.moveToFirst()){
                 do{
@@ -256,7 +303,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 } while(cursor.moveToNext());
             }
             db.close();
-            //print the string
             Log.d("db validUser()","rr cursor: " + cursor + "\n " + str);
         } catch(Exception e){
             Log.d("db validUser()","rr e: "+ e);
@@ -271,5 +317,4 @@ public class DBHandler extends SQLiteOpenHelper {
             return false;
         }
     }
-
 }

@@ -47,6 +47,13 @@ public class AddDoctor extends AppCompatActivity {
         rbtn = (RadioButton) findViewById(selectedId);
         user_type = rbtn.getText().toString();
 
+        // Reset errors
+        entusername.setError(null);
+        entpassword.setError(null);
+        entfname.setError(null);
+        entlname.setError(null);
+        entdepartment.setError(null);
+
         enttype.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
@@ -60,13 +67,6 @@ public class AddDoctor extends AppCompatActivity {
         btnAddDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // Reset errors
-                entusername.setError(null);
-                entpassword.setError(null);
-                entfname.setError(null);
-                entlname.setError(null);
-                entdepartment.setError(null);
 
                 String fname = entfname.getText().toString();
                 String lname = entlname.getText().toString();
@@ -118,19 +118,22 @@ public class AddDoctor extends AppCompatActivity {
                 if(!validUsername || !validPassword || !validFname || !validLname || !validDepart) {
                     focusView.requestFocus();
                 }else{
+                    if(db.isUniqueUsername(username)) {
 
-                    Log.d("values entered", "rr \n username: " + username + " " + password + "\nname: " + fname + lname + "\ndprtmt:  " + department + "type :" + user_type);
-
-                    try {
-                        Log.d("database", "rr db : " + db);
-                        //calling addNewDoctor method from the DBHandler class
-                        db.addNewDoctor(new Doctor(username, password, fname, lname, department, user_type == "Doctor" ? 1 : 0));// if 'doctor' radio button is clicked, type = 1 else type = 0
-                        Toast.makeText(getApplicationContext(), "Doctor added...", Toast.LENGTH_LONG).show();
-                        Log.d("added successfully", "rr \n username: " + username + " " + password + "\nname: " + fname + lname + "\ndprtmt:  " + department + "type :" + user_type);
-                        finish();//go back to previous activity. Here, goes to Home Activity
-                    } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "Database error \n Couldn't add new Doctor", Toast.LENGTH_LONG).show();
-                        Log.d("error", "rr method addNewDoctor()");
+                        try {
+                            Log.d("database", "rr db : " + db);
+                            //calling addNewDoctor method from the DBHandler class
+                            db.addNewDoctor(new Doctor(username, password, fname, lname, department, user_type == "Doctor" ? 1 : 0));// if 'doctor' radio button is clicked, type = 1 else type = 0
+                            Toast.makeText(getApplicationContext(), "Doctor added", Toast.LENGTH_LONG).show();
+                            Log.d("added successfully", "rr \n username: " + username + " " + password + "\nname: " + fname + lname + "\ndprtmt:  " + department + "type :" + user_type);
+                            finish();//go back to previous activity. Here, goes to Home Activity
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Database error \n Couldn't add new Doctor", Toast.LENGTH_LONG).show();
+                        }
+                    }else{
+                        entusername.setError("Username already exists");
+                        focusView = entusername;
+                        focusView.requestFocus();
                     }
                 }
             }
